@@ -9,7 +9,7 @@
     ./features/packages
     ./features/git
     ./features/nvim
-    ./features/secrets
+    #./features/secrets
     ./features/tmux
   ];
 
@@ -23,10 +23,6 @@
   home.stateVersion = "23.05"; # Please read the comment before changing.
 
   nixpkgs.config.allowUnfreePredicate = _: true;
-
-  home.packages = [
-    pkgs.pokemonsay
-  ];
 
   home.sessionVariables = {
     EDITOR = "nvim";

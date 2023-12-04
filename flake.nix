@@ -38,16 +38,15 @@
     {
       defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
       defaultPackage.aarch64-darwin = home-manager.defaultPackage.aarch64-darwin;
-      defaultPackage.x86_64-darwin = home-manager.defaultPackage.x86_64-darwin;
 
       darwinConfigurations = {
-        phobos = nix-darwin.lib.darwinSystem {
+        valyria = nix-darwin.lib.darwinSystem {
           specialArgs = extraArgs // {
             remapKeys = false;
           };
           system = "aarch64-darwin";
           modules = [
-            ./systems/phobos
+            ./systems/valyria
             home-manager.darwinModules.default
             {
               home-manager.useGlobalPkgs = true;
@@ -55,52 +54,6 @@
               home-manager.extraSpecialArgs = extraArgs;
             }
           ];
-        };
-
-        titan = nix-darwin.lib.darwinSystem {
-          specialArgs = extraArgs // {
-            remapKeys = true;
-          };
-          system = "x86_64-darwin";
-          modules = [
-            ./systems/titan
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = extraArgs;
-            }
-          ];
-        };
-      };
-
-      homeConfigurations = {
-        # # MacBook Pro M2 Pro 16"
-        # "kevin@phobos" = home-manager.lib.homeManagerConfiguration {
-        #   modules = [ ./home/phobos.nix ];
-        #   pkgs = import nixpkgs { system = "aarch64-darwin"; };
-        #   extraSpecialArgs = extraArgs;
-        # };
-
-        # # Test MacOS setup
-        # "kevin@titan" = home-manager.lib.homeManagerConfiguration {
-        #  modules = [ ./home/titan.nix ];
-        #  pkgs = import nixpkgs { system = "x86_64-darwin"; };
-        #  extraSpecialArgs = extraArgs;
-        # };
-
-        # VM running Arch Linux
-        "kevin@archlinux-vm" = home-manager.lib.homeManagerConfiguration {
-          modules = [ ./home/archlinux-vm.nix ];
-          pkgs = import nixpkgs { system = "x86_64-linux"; };
-          extraSpecialArgs = extraArgs;
-        };
-
-        # Dell XPS 15 9500 running Arch Linux
-        "kevin@archlinux" = home-manager.lib.homeManagerConfiguration {
-          modules = [ ./home/archlinux.nix ];
-          pkgs = import nixpkgs { system = "x86_64-linux"; };
-          extraSpecialArgs = extraArgs;
         };
       };
     };

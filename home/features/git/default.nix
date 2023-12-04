@@ -8,10 +8,10 @@
     enable = true;
     package = pkgs.git;
 
-    userName = "Kevin Rudde";
-    userEmail = "k.rudde@shopware.com";
+    userName = "Tim Lange";
+    userEmail = "t.lange@shopware.com";
 
-    signing.key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoDDDhao2sZNI8bkouzh0J21uSWRNUvKfHhsliR8U1oPKs8r7xSovTgY2Ex7cSmoDfOj5xBvocgE/QWGwPso9QibNv7+DgaFALtofcjiUr53CVxym7vFwAOseiydjQHhrvYZuRBLe+bcUKByA3oN9yBNSJYP5a2owJNLzdnOSQBWcVQdHuUtgyZqYL2In1e0xuhETsZWznOaZyrFrRIKoknPRbZvnhLgN0L/U+t0mjRczkj1SxBKKQW6DqGdeSrPo+KFFxGcrciQTkLotthnGtv/J3z+NQvWNsJBYDU7rrooL6xA0//m1+P9e1K4u5coAwSb6DTDfEhos5G/PC+03J";
+    signing.key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDCYPCL4vzkj8saRLC3MRgUrZGpKU3I2Po6XK0V6NsBS4RIb0HauOlinZEdCEdbFqGsCEpOZqIsjyiZmcecyTyK4Y6xeDFAyyatW6GV2wyQFdWJw/q6jWU+QCgWtG3SgfE4gKIKWZNbFB1L+g5PLkclLHy1s8AqauJUcxBnu1wdW/SlBl/HLuzKlEcXmRswv2esV1WVh3WJyNJCKhGL4qnfDS+BwRMCNfqsYzoY8xQdNT+SgmoM+rHiotEW8Tyy0MNLSrzk+QPZuHgNBWJHnc4j2Fv0s52CLRK34UFogDFrYutBEiCNpj4E8ABsSr/Ji4M5Jp+Hx11+kE7e/JctNSN28J4DGkVyDRjxINb5jmIbTEzYDcJKge3xPAH8lMEqCIYuFw4MSvwk8ptnbOPf113YVUMYSxeB1PcaLDp+vD6pjCcA3WwB19djdZH2iVOULWZYzkIl60qu0n322ZcAv2Ek0v+aMjpovRrC9Y/DsM2S08I7YtSN5Fs8CcNkimJQ/rs=";
     signing.signByDefault = true;
 
     extraConfig = {
@@ -40,6 +40,6 @@
   };
 
   home.file = {
-    ".ssh/allowed_signers".text = "k.rudde@shopware.com namespaces=\"git\" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoDDDhao2sZNI8bkouzh0J21uSWRNUvKfHhsliR8U1oPKs8r7xSovTgY2Ex7cSmoDfOj5xBvocgE/QWGwPso9QibNv7+DgaFALtofcjiUr53CVxym7vFwAOseiydjQHhrvYZuRBLe+bcUKByA3oN9yBNSJYP5a2owJNLzdnOSQBWcVQdHuUtgyZqYL2In1e0xuhETsZWznOaZyrFrRIKoknPRbZvnhLgN0L/U+t0mjRczkj1SxBKKQW6DqGdeSrPo+KFFxGcrciQTkLotthnGtv/J3z+NQvWNsJBYDU7rrooL6xA0//m1+P9e1K4u5coAwSb6DTDfEhos5G/PC+03J";
+    ".ssh/allowed_signers".text = "t.lange@shopware.com namespaces=\"git\" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDCYPCL4vzkj8saRLC3MRgUrZGpKU3I2Po6XK0V6NsBS4RIb0HauOlinZEdCEdbFqGsCEpOZqIsjyiZmcecyTyK4Y6xeDFAyyatW6GV2wyQFdWJw/q6jWU+QCgWtG3SgfE4gKIKWZNbFB1L+g5PLkclLHy1s8AqauJUcxBnu1wdW/SlBl/HLuzKlEcXmRswv2esV1WVh3WJyNJCKhGL4qnfDS+BwRMCNfqsYzoY8xQdNT+SgmoM+rHiotEW8Tyy0MNLSrzk+QPZuHgNBWJHnc4j2Fv0s52CLRK34UFogDFrYutBEiCNpj4E8ABsSr/Ji4M5Jp+Hx11+kE7e/JctNSN28J4DGkVyDRjxINb5jmIbTEzYDcJKge3xPAH8lMEqCIYuFw4MSvwk8ptnbOPf113YVUMYSxeB1PcaLDp+vD6pjCcA3WwB19djdZH2iVOULWZYzkIl60qu0n322ZcAv2Ek0v+aMjpovRrC9Y/DsM2S08I7YtSN5Fs8CcNkimJQ/rs=";
   };
 }

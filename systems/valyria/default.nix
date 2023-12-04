@@ -12,18 +12,18 @@
     ../shared/fonts.nix
   ];
 
-  users.users.kevin = {
-    home = "/Users/kevin";
+  users.users.tim = {
+    home = "/Users/tim";
     shell = "${pkgs.fish}/bin/fish";
   };
 
-  home-manager.users.kevin = { imports = [
-    ../../home/phobos.nix
+  home-manager.users.tim = { imports = [
+    ../../home/valyria.nix
   ];};
 
 
   nix = {
-    settings.trusted-users = [ "root" "kevin" ];
+    settings.trusted-users = [ "root" "tim" ];
   };
 
   nix.gc = {
