@@ -65,6 +65,7 @@
     settings = {
       aws.disabled = true;
       gcloud.disabled = true;
+      git_status.disabled = true;
       command_timeout = 1500;
     };
   };
@@ -89,20 +90,22 @@
     ".config/alacritty/alacritty.yml".text = ''
       font:
         normal:
-          family: JetBrainsMono Nerd Font
+          family: Hack Nerd Font
           style: Regular
 
         bold:
-          family: JetBrainsMono Nerd Font
+          family: Hack Nerd Font
           style: Bold
 
         italic:
-          family: JetBrainsMono Nerd Font
+          family: Hack Nerd Font
           style: Italic
 
         bold_italic:
-          family: JetBrainsMono Nerd Font
+          family: Hack Nerd Font
           style: Bold Italic
+        
+        size: 14.0
 
       key_bindings:
         - { key: C, mods: Command|Shift, action: "Copy" }

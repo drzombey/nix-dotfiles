@@ -9,7 +9,6 @@
 
     _1password
     jq
-    #awscli2
     htop
     coreutils
     pigz

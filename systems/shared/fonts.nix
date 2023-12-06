@@ -7,7 +7,7 @@
     fonts = [
       ( pkgs.nerdfonts.override {
         fonts = [
-          "JetBrainsMono"
+          "Hack"
         ];
       } )
     ];
