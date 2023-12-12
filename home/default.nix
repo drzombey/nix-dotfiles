@@ -11,6 +11,7 @@
     ./features/nvim
     #./features/secrets
     ./features/tmux
+    ./features/1password
   ];
 
   # This value determines the Home Manager release that your configuration is
