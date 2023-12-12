@@ -18,6 +18,15 @@
     mru-spaces = false;
   };
 
-  system.keyboard.enableKeyMapping = true;
-  system.keyboard.swapLeftCommandAndLeftAlt = remapKeys;
-}
+  system.keyboard = {
+    enableKeyMapping = true;
+    swapLeftCommandAndLeftAlt = remapKeys;
+
+    # use https://hidutil-generator.netlify.app/ and convert hex to decimal
+    userKeyMapping = [
+      {
+        HIDKeyboardModifierMappingSrc = 30064771300;
+        HIDKeyboardModifierMappingDst = 30064771302;
+      }
+    ];
+  };

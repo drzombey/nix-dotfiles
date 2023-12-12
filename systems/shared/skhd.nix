@@ -51,25 +51,6 @@
 
       lalt - l : pmset displaysleepnow
 
-      # tilde like in linux
-      rctrl - 0x1E : skhd -k "alt - n"
-
-      # pipe like in linux
-      rctrl - 0x32 : skhd -t "|"
-
-      # @ like in linux
-      rctrl - q : skhd -t "@"
-
-      # curly brackets
-      rctrl - 7 : skhd -t "{"
-      rctrl - 0 : skhd -t "}"
-      rctrl - 8 : skhd -t "["
-      rctrl - 9 : skhd -t "]"
-
-
-      # backslash
-      rctrl - 0x1B : skhd -t "\"
-
 
       # defines a new mode 'resize' with an on_enter command, that captures keypresses
       :: resize @ : yabai -m config active_window_border_color 0xFFFF00FF
