@@ -4,6 +4,12 @@
 
   homebrew = {
     enable = true;
+    
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "uninstall";
+      upgrade = true;
+    };
 
     taps = [
       "platformsh/tap"
