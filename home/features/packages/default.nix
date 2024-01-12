@@ -5,7 +5,6 @@
     cachix
 
     nixpkgs-fmt
-    sops
 
     _1password
     jq

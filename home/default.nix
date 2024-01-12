@@ -1,15 +1,12 @@
 { pkgs
-, sops-nix
 , ...
 }: {
 
   imports = [
-    sops-nix.homeManagerModule
     ./features/shell
     ./features/packages
     ./features/git
     ./features/nvim
-    #./features/secrets
     ./features/tmux
     ./features/1password
   ];
