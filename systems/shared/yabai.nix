@@ -34,6 +34,7 @@
         "System Settings"
         "zoom.us"
         "Microsoft Teams"
+        "Jetbrains Toolbox"
       )
 
       for app in ''${ignored_apps[@]}; do
