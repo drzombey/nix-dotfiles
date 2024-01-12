@@ -21,6 +21,7 @@
 
     casks = [
       "bruno"
+      "brave-browser"
     ];
   };
 }
