@@ -1,8 +1,10 @@
 { pkgs
+, flake
 , ...
 }: {
 
   imports = [
+    flake.inputs.mac-app-util.homeManagerModules.default
     ./features/shell
     ./features/packages
     ./features/git

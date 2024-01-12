@@ -14,6 +14,8 @@
 
     devenv.url = "github:cachix/devenv/v0.6.3";
     devenv.inputs.nixpkgs.follows = "nixpkgs";
+
+    mac-app-util.url = "github:hraban/mac-app-util";
   };
 
   outputs =
