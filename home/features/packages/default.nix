@@ -1,5 +1,9 @@
 { pkgs, flake, ... }: {
 
+  imports = [
+    ./colima.nix
+  ];
+
   home.packages = with pkgs; [
     flake.inputs.devenv.packages.${system}.devenv
     cachix
@@ -16,7 +20,6 @@
     wireguard-tools
     mysql80
     kubectl
-    colima
     docker-client
     dive
     bun
