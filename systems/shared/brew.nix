@@ -19,6 +19,7 @@
       "platformsh-cli"
       "colima"
       "argocd"
+      "dnsmasq"
     ];
 
     casks = [
