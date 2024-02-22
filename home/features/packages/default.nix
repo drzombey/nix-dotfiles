@@ -1,9 +1,5 @@
 { pkgs, flake, ... }: {
 
-  imports = [
-    ./colima.nix
-  ];
-
   home.packages = with pkgs; [
     flake.inputs.devenv.packages.${system}.devenv
     cachix
@@ -28,6 +24,8 @@
     k6
     awscli2
     spotify
+    gnused
+    azure-cli
   ];
 }
 

@@ -1,6 +1,6 @@
 # Number of CPUs to be allocated to the virtual machine.
 # Default: 2
-cpu: 4
+cpu: 6
 
 # Size of the disk in GiB to be allocated to the virtual machine.
 # NOTE: changing this has no effect after the virtual machine has been created.
@@ -9,11 +9,11 @@ disk: 200
 
 # Size of the memory in GiB to be allocated to the virtual machine.
 # Default: 2
-memory: 6
+memory: 12
 
 # Architecture of the virtual machine (x86_64, aarch64, host).
 # Default: host
-arch: host
+arch: aarch64
 
 # Container runtime to be used (docker, containerd).
 # Default: docker
@@ -79,7 +79,7 @@ network:
 
 # Forward the host's SSH agent to the virtual machine.
 # Default: false
-forwardAgent: false
+forwardAgent: true
 
 # Docker daemon configuration that maps directly to daemon.json.
 # https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-configuration-file.
@@ -110,7 +110,7 @@ vmType: qemu
 
 # Utilise rosetta for amd64 emulation (requires m1 mac and vmType `vz`)
 # Default: false
-rosetta: false
+rosetta: true
 
 # Volume mount driver for the virtual machine (virtiofs, 9p, sshfs).
 #
@@ -122,7 +122,7 @@ rosetta: false
 # of concurrent reads or writes).
 #
 # Default: virtiofs (for vz), sshfs (for qemu)
-mountType: sshfs
+mountType: virtiofs
 
 # Propagate inotify file events to the VM.
 # NOTE: this is experimental.
