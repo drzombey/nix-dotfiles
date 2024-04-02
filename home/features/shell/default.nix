@@ -77,7 +77,7 @@
 
   programs.eza = {
     enable = true;
-    enableAliases = true;
+    enableFishIntegration = true;
   };
 
   home.shellAliases = {
