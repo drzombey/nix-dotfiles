@@ -16,6 +16,7 @@
     wireguard-tools
     mysql80
     kubectl
+    kubeswitch
     docker-client
     dive
     bun
@@ -25,7 +26,6 @@
     awscli2
     spotify
     gnused
-    azure-cli
   ];
 }
 
