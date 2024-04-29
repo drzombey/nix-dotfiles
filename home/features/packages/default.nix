@@ -16,7 +16,7 @@
     wireguard-tools
     mysql80
     kubectl
-    kubeswitch
+    kubectx
     docker-client
     dive
     bun
