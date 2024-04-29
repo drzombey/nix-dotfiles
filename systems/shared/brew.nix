@@ -25,6 +25,7 @@
     casks = [
       "bruno"
       "brave-browser"
+      "openlens"
     ];
   };
 
