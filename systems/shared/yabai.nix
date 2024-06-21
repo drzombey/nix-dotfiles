@@ -6,8 +6,9 @@
     enableScriptingAddition = true;
     package = pkgs.yabai;
     config = {
-      debug_output = "on";
+      debug_output = "off";
       layout = "bsp";
+      window_placement = "second_child";
 
       top_padding = 10;
       bottom_padding = 10;
