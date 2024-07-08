@@ -13,6 +13,7 @@
 
     taps = [
       "platformsh/tap"
+      "vitobotta/tap"
     ];
 
     brews = [
@@ -20,6 +21,7 @@
       "colima"
       "argocd"
       "dnsmasq"
+      "hetzner_k3s"
     ];
 
     casks = [
