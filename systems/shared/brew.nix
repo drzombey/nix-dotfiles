@@ -22,6 +22,7 @@
       "argocd"
       "dnsmasq"
       "hetzner_k3s"
+      "helm"
     ];
 
     casks = [
