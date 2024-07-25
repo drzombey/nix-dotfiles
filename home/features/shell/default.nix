@@ -56,6 +56,10 @@
       t = ''
         tmux attach -t "$(tmux ls -F '#{session_name}:#{window_name}' | fzf)"
       '';
+      awsx = ''
+        set -gx AWS_PROFILE (aws configure list-profiles | fzf)
+        echo "Using profile: $AWS_PROFILE"
+      '';
     };
   };
 
@@ -85,6 +89,7 @@
     "wgdown-staging" = "wg-quick down ~/.config/wireguard/staging.conf";
     "cat" = "bat -pp";
     "tailscale"="/Applications/Tailscale.app/Contents/MacOS/Tailscale";
+    "k" = "kubectl";
   };
 
   home.file = {
