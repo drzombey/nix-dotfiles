@@ -27,6 +27,7 @@
     awscli2
     spotify
     gnused
+    act
   ];
 }
 
