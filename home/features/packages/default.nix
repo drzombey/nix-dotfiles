@@ -21,6 +21,7 @@
     dive
     bun
     k9s
+    kubectx
     gh
     k6
     awscli2
