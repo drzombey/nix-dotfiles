@@ -28,6 +28,7 @@
     spotify
     gnused
     act
+    cilium-cli
   ];
 }
 
