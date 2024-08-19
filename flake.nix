@@ -2,6 +2,7 @@
   description = "Home Manager configuration";
 
   inputs = {
+    nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     nix-darwin.url = "github:LnL7/nix-darwin/master";
@@ -18,6 +19,7 @@
 
   outputs =
     { self
+    , nix
     , nixpkgs
     , nix-darwin
     , home-manager
@@ -49,6 +51,7 @@
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = extraArgs;
             }
+            nix.darwinModules.default
           ];
         };
       };

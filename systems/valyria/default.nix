@@ -18,12 +18,8 @@
   };
 
   home-manager.users.tim = { imports = [
-    ../../home/valyria.nix
-  ];};
-
-
-  nix = {
-    settings.trusted-users = [ "root" "tim" ];
+      ../../home/valyria.nix
+    ];
   };
 
   nix.gc = {
@@ -50,10 +46,7 @@
 
   time.timeZone = "Europe/Berlin";
 
-  # Nix config from https://github.com/DeterminateSystems/nix-installer
-  nix.settings.build-users-group = "nixbld";
-  nix.settings.experimental-features = "nix-command flakes repl-flake";
-  nix.settings.bash-prompt-prefix = "(nix:$name)\040";
-  nix.settings.max-jobs = "auto";
-  nix.settings.extra-nix-path = "nixpkgs=flake:nixpkgs";
+  nix = {
+    settings.trusted-users = [ "root" "tim" ];
+  };
 }
