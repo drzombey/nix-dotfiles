@@ -22,6 +22,7 @@
     bun
     k9s
     kubectx
+    kubectl-neat
     gh
     k6
     awscli2
