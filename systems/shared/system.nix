@@ -18,6 +18,24 @@
     mru-spaces = false;
   };
 
+  system.defaults.finder = {
+    "ShowPathbar" = true;
+    "AppleShowAllFiles" = true;
+  };
+
+  system.defaults.NSGlobalDomain = {
+    "AppleShowAllFiles" = true;
+    "AppleShowAllExtensions" = true;
+    "AppleInterfaceStyle" = "Dark";
+    "com.apple.mouse.tapBehavior" = 1;
+  };
+
+  environment.variables = {
+    SSH_AUTH_SOCK = "~/.1password/agent.sock";
+  };
+
+  security.pam.enableSudoTouchIdAuth = true;
+
   system.keyboard = {
     enableKeyMapping = true;
     swapLeftCommandAndLeftAlt = remapKeys;
