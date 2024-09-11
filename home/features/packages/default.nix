@@ -10,6 +10,7 @@
     jq
     htop
     coreutils
+    go_1_23
     pigz
     ssm-session-manager-plugin
     wget
