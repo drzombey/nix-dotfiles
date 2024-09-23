@@ -46,7 +46,7 @@
   documentation.man.enable = false;
 
   time.timeZone = "Europe/Berlin";
-
+  system.stateVersion = 5;
   nix = {
     settings.trusted-users = [ "root" "tim" ];
   };
