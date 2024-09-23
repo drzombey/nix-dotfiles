@@ -17,7 +17,8 @@
     shell = "${pkgs.fish}/bin/fish";
   };
 
-  home-manager.users.tim = { imports = [
+  home-manager.users.tim = { 
+    imports = [
       ../../home/valyria.nix
     ];
   };

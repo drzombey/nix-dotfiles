@@ -4,13 +4,11 @@
 }: {
 
   imports = [
-    flake.inputs.mac-app-util.homeManagerModules.default
-    ./features/shell
-    ./features/packages
-    ./features/git
-    ./features/nvim
-    ./features/tmux
-    ./features/1password
+    ../features/shell
+    ../features/packages
+    ../features/nvim
+    ../features/tmux
+    ../features/secrets
   ];
 
   # This value determines the Home Manager release that your configuration is
@@ -28,6 +26,12 @@
     EDITOR = "nvim";
   };
 
-  # Let Home Manager install and manage itself.
+  home.username = "tim";
+  home.homeDirectory = "${
+    if pkgs.stdenv.hostPlatform.isDarwin
+    then "/Users/tim"
+    else "/home/tim"
+  }";
+
   programs.home-manager.enable = true;
 }
