@@ -70,4 +70,55 @@ chsh -s <Change this to your shell path which you can find in /etc/shells there 
 
 After reload of your terminal the correct shell should be used.
 
+### Sops (Optional)
+If you want to use sops for your secrets you have to install it via package
+
+To generate age keys you can use the following command:
+```bash
+mkdir -p ~/.config/sops/age
+age-keygen -o ~/.config/sops/age/keys.txt
+```
+ATTENTION! The keys.txt file is your private key. Don't share it with anyone. Make sure that you exclude it from your backups and version control.
+
+Now create a .sops.yaml file in your home directory with the following content and replace the age key with your public key:
+```yaml
+keys:
+  - &tim age17w3rn544ay2yasdaw2gkpalxokr6dsfsd46u88u4gc4nnplsalunqdslqr2h4
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *tim
+```
+
+Now you can encrypt your secrets with the following command:
+```bash
+sops home/feature/secrets/secrets.yaml
+```
+This will open your editor and you can add your secrets. After saving and closing the editor the file will be encrypted.
+
+
+#### Add another machine
+If you want to add another machine to your encrypted secrets you have to add the public key of the new machine to the .sops.yaml file. 
+```yaml
+keys:
+  - &tim age17w3rn544ay2yasdaw2gkpalxokr6dsfsd46u88u4gc4nnplsalunqdslqr2h4
+  - &new_machine age17w3rn544ay2yasdaw2gkpalxokr6dsfsd46u88u4gc4nnplsalunqdslqr2h4
+creation_rules:
+    - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+        key_groups:
+        - age:
+        - *tim
+        - *new_machine
+```
+
+You have to update the existing secrets with the new public key.
+```bash
+sops updatekeys home/feature/secrets/secrets.yaml
+```
+
+Now you can again encrypt your secrets with the following command:
+```bash
+sops home/fear/secrets/secrets.yaml
+```
 

@@ -15,6 +15,7 @@
 
     devenv.url = "github:cachix/devenv/main";
     mac-app-util.url = "github:hraban/mac-app-util";
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs =
@@ -24,12 +25,14 @@
     , nix-darwin
     , home-manager
     , devenv
+    , sops-nix
     , ...
     }:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       extraArgs = {
+        inherit sops-nix;
         flake = self;
       };
     in

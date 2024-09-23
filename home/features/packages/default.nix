@@ -5,6 +5,8 @@
     cachix
 
     nixpkgs-fmt
+    sops
+    age
 
     _1password
     jq
