@@ -6,9 +6,7 @@
 
 {
   imports = [
-    flake.inputs.mac-app-util.homeManagerModules.default
-    ./defaults/personal-device.nix
-    ./defaults/default.nix
+    ./default.nix
   ];
 
   home.packages = with pkgs; [

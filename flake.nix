@@ -37,14 +37,12 @@
       };
     in
     {
-      defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
-      defaultPackage.aarch64-darwin = home-manager.defaultPackage.aarch64-darwin;
-
       colmena = {
         meta = {
           nixpkgs = import nixpkgs {
             system = "x86_64-linux";
           };
+          specialArgs = extraArgs;
         };
         "astapor" = {
           deployment.targetHost = "astapor.tail86ba67.ts.net";
@@ -55,6 +53,9 @@
           ];
         };
       };
+
+      defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
+      defaultPackage.aarch64-darwin = home-manager.defaultPackage.aarch64-darwin;
 
       darwinConfigurations = {
         valyria = nix-darwin.lib.darwinSystem {

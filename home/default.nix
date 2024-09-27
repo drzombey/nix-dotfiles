@@ -1,14 +1,19 @@
-{ pkgs
+{ config
+, pkgs
+, lib
 , flake
-, ...
-}: {
+, ... }:
 
-  imports = [
-    ../features/shell
-    ../features/packages
-    ../features/nvim
-    ../features/tmux
-    ../features/secrets
+{
+   imports = [
+    flake.inputs.mac-app-util.homeManagerModules.default
+    ./features/shell
+    ./features/packages
+    ./features/nvim
+    ./features/tmux
+    ./features/secrets
+    ./features/git
+    ./features/1password
   ];
 
   # This value determines the Home Manager release that your configuration is
@@ -34,4 +39,5 @@
   }";
 
   programs.home-manager.enable = true;
+
 }
