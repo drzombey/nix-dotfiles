@@ -13,7 +13,6 @@
     ./features/tmux
     ./features/secrets
     ./features/git
-    ./features/1password
   ];
 
   # This value determines the Home Manager release that your configuration is
