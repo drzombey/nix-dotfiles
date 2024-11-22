@@ -31,6 +31,7 @@
       "bruno"
       "brave-browser"
       "openlens"
+      "hammerspoon"
     ];
   };
 }

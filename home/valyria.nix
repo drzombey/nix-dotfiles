@@ -10,9 +10,8 @@
   ];
 
   home.packages = with pkgs; [
-    skhd
     alacritty
-    _1password
+    _1password-cli
     coreutils
     go_1_23
     pigz

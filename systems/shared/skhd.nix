@@ -5,7 +5,7 @@
 , ...
 }: {
   services.skhd = {
-    enable = true;
+    enable = false;
     package = pkgs.skhd;
     skhdConfig = ''
       :: default : yabai -m config active_window_opacity 1; yabai -m config normal_window_opacity 1;

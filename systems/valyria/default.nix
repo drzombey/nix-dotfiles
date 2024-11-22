@@ -10,6 +10,7 @@
     ../shared/brew.nix
     ../shared/system.nix
     ../shared/fonts.nix
+    ../shared/aerospace.nix
   ];
 
   users.users.tim = {

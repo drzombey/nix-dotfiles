@@ -13,6 +13,7 @@
     ./features/tmux
     ./features/secrets
     ./features/git
+    ./features/hammerspoon
   ];
 
   # This value determines the Home Manager release that your configuration is
