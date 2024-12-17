@@ -15,11 +15,13 @@
     };
 
     taps = [
+      "aws/tap"
     ];
 
     brews = [
       "helm"
       "k6"
+      "eks-node-viewer"
     ];
 
     casks = [
