@@ -15,22 +15,16 @@
     };
 
     taps = [
-      "platformsh/tap"
-      "vitobotta/tap"
     ];
 
     brews = [
-      "platformsh-cli"
-      "argocd"
-      "dnsmasq"
-      "hetzner_k3s"
       "helm"
+      "k6"
     ];
 
     casks = [
       "bruno"
       "brave-browser"
-      "openlens"
       "hammerspoon"
     ];
   };
