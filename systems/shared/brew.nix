@@ -22,6 +22,7 @@
       "helm"
       "k6"
       "eks-node-viewer"
+      "mysql-client"
     ];
 
     casks = [

@@ -17,7 +17,6 @@
     pigz
     ssm-session-manager-plugin
     wireguard-tools
-    mysql80
     kubectl
     kubectx
     docker-client
