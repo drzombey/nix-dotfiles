@@ -2,7 +2,8 @@
   description = "Home Manager configuration";
 
   inputs = {
-    nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
+    # nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
+    nix.url = "github:kevinrudde/determinate-nix/remove-unused-nix-daemon-option";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     nix-darwin.url = "github:LnL7/nix-darwin/master";
