@@ -24,6 +24,7 @@
       "eks-node-viewer"
       "mysql-client"
       "istioctl"
+      "uv"
     ];
 
     casks = [
