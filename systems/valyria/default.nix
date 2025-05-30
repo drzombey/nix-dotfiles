@@ -44,6 +44,7 @@
 
   documentation.enable = false;
   documentation.man.enable = false;
+  system.primaryUser = "tim";
 
   time.timeZone = "Europe/Berlin";
   system.stateVersion = 5;
