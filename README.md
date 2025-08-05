@@ -1,9 +1,16 @@
 # Installation
 
+You need to install Nix, but we are not using their official installer. Instead, we are using the Determinate Systems Nix Installer. You can download it [here](https://install.determinate.systems/determinate-pkg/stable/Universal)!
+
 Requirements:
-- Nix Darwin installer [https://github.com/DeterminateSystems/nix-installer]
-- MacOS Sonoma
+- MacOS
 - Same hostname as in the config
+
+## Update Nix version
+To update your Nix version to the latest recommended release, use the following command
+```bash
+sudo determinate-nixd upgrade
+```
 
 ## Step 1
 Clone the repository in a specific path you want via https

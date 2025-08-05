@@ -5,6 +5,7 @@
 , ...
 }: {
   imports = [
+    ../shared/determinate.nix
     ../shared/yabai.nix
     ../shared/skhd.nix
     ../shared/brew.nix
@@ -22,15 +23,6 @@
     imports = [
       ../../home/valyria.nix
     ];
-  };
-
-  nix.gc = {
-    automatic = true;
-    options = "--delete-older-than 2d";
-    interval = {
-      Hour = 5;
-      Minute = 0;
-    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -52,4 +44,6 @@
   nix = {
     settings.trusted-users = [ "root" "tim" ];
   };
+
+  nix.enable = false;
 }
