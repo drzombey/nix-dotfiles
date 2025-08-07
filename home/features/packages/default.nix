@@ -10,6 +10,8 @@
     jq
     htop
     wget
+    obsidian
   ];
 }
 
+clear
