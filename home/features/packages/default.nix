@@ -13,5 +13,3 @@
     obsidian
   ];
 }
-
-clear

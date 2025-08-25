@@ -28,7 +28,6 @@
     gh
     k6
     awscli2
-    spotify
     gnused
     act
     cilium-cli
