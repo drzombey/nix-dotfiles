@@ -13,7 +13,6 @@
     alacritty
     _1password-cli
     coreutils
-    go_1_23
     pigz
     ssm-session-manager-plugin
     wireguard-tools
