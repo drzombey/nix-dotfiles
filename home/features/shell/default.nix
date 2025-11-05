@@ -43,6 +43,10 @@
       set -gx VOLTA_HOME $HOME/.volta
       fish_add_path $VOLTA_HOME/bin
 
+      # SW PAAS CLI
+      set -gx SW_PAAS_HOME $HOME/.sw-paas
+      fish_add_path $SW_PAAS_HOME/bin
+
       # 1password ssh-agent
       set -gx SSH_AUTH_SOCK "~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock"
     '';
