@@ -25,6 +25,7 @@
       "mysql-client"
       "istioctl"
       "uv"
+      "mise"
     ];
 
     casks = [

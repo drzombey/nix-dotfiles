@@ -56,7 +56,7 @@
       defaultPackage.aarch64-darwin = home-manager.defaultPackage.aarch64-darwin;
 
       darwinConfigurations = {
-        valyria = nix-darwin.lib.darwinSystem {
+        Valyria = nix-darwin.lib.darwinSystem {
           specialArgs = extraArgs // {
             remapKeys = false;
           };
