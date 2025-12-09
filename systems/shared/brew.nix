@@ -26,6 +26,8 @@
       "istioctl"
       "uv"
       "mise"
+      "luarocks"
+      "ripgrep"
     ];
 
     casks = [

@@ -30,14 +30,27 @@
         inner.vertical = 10;
       };
 
+      workspace-to-monitor-force-assignment = {
+        "0" = "built-in";
+      };
+
       key-mapping.preset = "qwerty";
       mode.main.binding = {
+
+        cmd-h = [];
+        cmd-alt-h = [];
+
         alt-1 = "workspace 1";
         alt-2 = "workspace 2";
         alt-3 = "workspace 3";
         alt-4 = "workspace 4";
         alt-5 = "workspace 5";
         alt-6 = "workspace 6";
+        alt-7 = "workspace 7";
+        alt-8 = "workspace 8";
+        alt-9 = "workspace 9";
+        alt-0 = "workspace 10";
+
 
         alt-shift-p = "workspace --wrap-around prev";
         alt-shift-n = "workspace --wrap-around next";
@@ -48,6 +61,11 @@
         alt-shift-4 = ["move-node-to-workspace 4" "workspace 4"];
         alt-shift-5 = ["move-node-to-workspace 5" "workspace 5"];
         alt-shift-6 = ["move-node-to-workspace 6" "workspace 6"];
+        alt-shift-7 = ["move-node-to-workspace 7" "workspace 7"];
+        alt-shift-8 = ["move-node-to-workspace 8" "workspace 8"];
+        alt-shift-9 = ["move-node-to-workspace 9" "workspace 9"];
+        alt-shift-0 = ["move-node-to-workspace 10" "workspace 10"];
+
 
         alt-left = "focus --boundaries-action wrap-around-the-workspace left";
         alt-right = "focus --boundaries-action wrap-around-the-workspace right";
@@ -70,6 +88,9 @@
         alt-b = "exec-and-forget open -na \"Google Chrome\" --args --new-window";
 
         alt-l = "exec-and-forget pmset displaysleepnow";
+
+        alt-shift-cmd-right = "move-node-to-monitor right";
+        alt-shift-cmd-left = "move-node-to-monitor left";
 
         alt-shift-q = "close --quit-if-last-window";
 

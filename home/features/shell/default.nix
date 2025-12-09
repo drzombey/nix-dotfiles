@@ -47,6 +47,9 @@
       set -gx SW_PAAS_HOME $HOME/.sw-paas
       fish_add_path $SW_PAAS_HOME/bin
 
+      # Mise activation
+      mise activate fish | source
+
       # 1password ssh-agent
       set -gx SSH_AUTH_SOCK "~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock"
     '';
