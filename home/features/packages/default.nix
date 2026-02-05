@@ -11,5 +11,6 @@
     htop
     wget
     obsidian
+    ghostty-bin
   ];
 }

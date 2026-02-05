@@ -28,12 +28,14 @@
       "mise"
       "luarocks"
       "ripgrep"
+      "gh"
     ];
 
     casks = [
       "bruno"
       "brave-browser"
       "hammerspoon"
+      "claude-code"
     ];
   };
 }

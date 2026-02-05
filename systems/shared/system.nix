@@ -16,11 +16,13 @@
     show-process-indicators = true;
     orientation = "bottom";
     mru-spaces = false;
+    expose-group-apps = true;
   };
 
   system.defaults.finder = {
     "ShowPathbar" = true;
     "AppleShowAllFiles" = true;
+    "ShowStatusBar" = true;
   };
 
   system.defaults.NSGlobalDomain = {

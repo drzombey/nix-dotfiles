@@ -32,12 +32,10 @@
 
 
       # Homebrew config
-      set -gx HOMEBREW_PREFIX "/opt/homebrew";
-      set -gx HOMEBREW_CELLAR "/opt/homebrew/Cellar";
-      set -gx HOMEBREW_REPOSITORY "/opt/homebrew";
-      ! set -q PATH; and set PATH \'\'; set -gx PATH "/opt/homebrew/bin" "/opt/homebrew/sbin" $PATH;
-      ! set -q MANPATH; and set MANPATH \'\'; set -gx MANPATH "/opt/homebrew/share/man" $MANPATH;
-      ! set -q INFOPATH; and set INFOPATH \'\'; set -gx INFOPATH "/opt/homebrew/share/info" $INFOPATH;
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+
+      # MySQL
+      fish_add_path /opt/homebrew/opt/mysql-client/bin
 
       # Volta
       set -gx VOLTA_HOME $HOME/.volta
@@ -112,6 +110,9 @@
     "cat" = "bat -pp";
     "tailscale"="/Applications/Tailscale.app/Contents/MacOS/Tailscale";
     "k" = "kubectl";
+    "vim" = "nvim";
+    "vi" = "nvim";
+    "v" = "nvim";
   };
 
   home.file = {
