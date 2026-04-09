@@ -17,6 +17,9 @@
       [user]
         name = Tim Lange
         email = t.lange@shopware.com
+
+      [url "ssh://git@github.com/"]
+        insteadOf = https://github.com/
     '';
   };
 
@@ -59,7 +62,7 @@
       gpg.ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
       gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
       
-      url."git@github.com:".insteadOf = "https://github.com";
+      url."ssh://git@github.com/".insteadOf = "https://github.com";
     };
   };
 

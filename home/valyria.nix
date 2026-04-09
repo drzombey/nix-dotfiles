@@ -31,5 +31,7 @@
     act
     cilium-cli
     colmena
+    terragrunt
+    terraform
   ];
 }
