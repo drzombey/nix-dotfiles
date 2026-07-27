@@ -12,6 +12,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3.16.0";
+
     devenv.url = "github:cachix/devenv/v1.8.1";
     mac-app-util.url = "github:hraban/mac-app-util";
     sops-nix.url = "github:Mic92/sops-nix";
@@ -20,6 +22,7 @@
   outputs =
     { self
     , nixpkgs
+    , determinate
     , nix-darwin
     , home-manager
     , devenv
@@ -68,6 +71,13 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = extraArgs;
+            }
+            determinate.darwinModules.default
+            {
+              determinateNix.enable = true;
+              determinateNix.customSettings = {
+                auto-optimise-store = true;
+              };
             }
           ];
         };
