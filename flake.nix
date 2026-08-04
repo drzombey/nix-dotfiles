@@ -58,6 +58,16 @@
       defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
       defaultPackage.aarch64-darwin = home-manager.defaultPackage.aarch64-darwin;
 
+      nixosConfigurations = {
+        braavos = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = extraArgs;
+          modules = [
+            ./systems/braavos
+          ];
+        };
+      };
+
       darwinConfigurations = {
         Valyria = nix-darwin.lib.darwinSystem {
           specialArgs = extraArgs // {
