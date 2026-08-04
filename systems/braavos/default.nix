@@ -14,8 +14,14 @@
   networking.hostName = "braavos";
   networking.networkmanager.enable = true;
 
-  # Flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Flakes + Cachix
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    # tim darf Caches/Substituter selbst nutzen (cachix use <name>)
+    trusted-users = [ "root" "tim" ];
+    substituters = [ "https://devenv.cachix.org" ];
+    trusted-public-keys = [ "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=" ];
+  };
 
   time.timeZone = "Europe/Berlin";
 
@@ -97,6 +103,7 @@
     curl
     wget
     htop
+    cachix
 
     # Apps
     google-chrome
