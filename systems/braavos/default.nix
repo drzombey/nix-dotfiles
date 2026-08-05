@@ -127,6 +127,8 @@
     wget
     htop
     cachix
+    mise
+    claude-code
 
     # Apps
     google-chrome
@@ -155,7 +157,6 @@
   ];
 
   services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = true;
 
   system.stateVersion = "26.05";
 }
