@@ -65,7 +65,8 @@
         else "${pkgs._1password-gui}/share/1password/op-ssh-sign";
       gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
       
-      url."ssh://git@github.com/".insteadOf = "https://github.com";
+      # Trailing slash ist Pflicht, sonst entsteht ssh://git@github.com//owner/repo
+      url."ssh://git@github.com/".insteadOf = "https://github.com/";
     };
   };
 
