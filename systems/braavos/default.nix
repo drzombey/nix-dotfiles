@@ -5,6 +5,7 @@
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.systemd.enable = true;
@@ -13,6 +14,14 @@
 
   networking.hostName = "braavos";
   networking.networkmanager.enable = true;
+
+  # Automatische Garbage Collection + Store-Deduplizierung
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+  nix.optimise.automatic = true;
 
   # Flakes + Cachix
   nix.settings = {
