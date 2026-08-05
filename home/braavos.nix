@@ -12,6 +12,7 @@
     ./features/tmux
     ./features/hyprland
     ./features/ghostty
+    ./features/theme
   ];
 
   home.stateVersion = "26.05";
