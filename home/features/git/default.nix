@@ -49,7 +49,8 @@
 
     settings = {
       user.name = "Tim Lange";
-      user.email = "t.lange@shopware.com";
+      # Default ist privat; die Firmenadresse greift nur via includeIf in ~/work
+      user.email = "odysnutzer@googlemail.com";
 
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
