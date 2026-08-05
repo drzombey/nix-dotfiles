@@ -80,6 +80,9 @@
   services.thermald.enable = true;
   services.power-profiles-daemon.enable = true;
 
+  # sudo-Passwort 30 Min gültig (pro Terminal)
+  security.sudo.extraConfig = "Defaults timestamp_timeout=30";
+
   # Docker
   virtualisation.docker.enable = true;
 
