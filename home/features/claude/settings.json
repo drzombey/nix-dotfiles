@@ -1,0 +1,39 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); current_dir=$(echo \"$input\" | jq -r '.workspace.current_dir'); model=$(echo \"$input\" | jq -r '.model.display_name'); printf \"\\033[2m%s@%s:%s\" \"$(whoami)\" \"$(hostname -s)\" \"$(basename \"$current_dir\")\"; if [ -d \"$current_dir/.git\" ]; then cd \"$current_dir\" && git_branch=$(git branch --show-current 2>/dev/null || echo 'detached'); printf \" (%s)\" \"$git_branch\"; fi; printf \" [%s]\\033[0m\" \"$model\""
+  },
+  "enabledPlugins": {
+    "i-have-adhd@i-have-adhd": true
+  },
+  "extraKnownMarketplaces": {
+    "i-have-adhd": {
+      "source": {
+        "source": "github",
+        "repo": "ayghri/i-have-adhd"
+      }
+    }
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark"
+}

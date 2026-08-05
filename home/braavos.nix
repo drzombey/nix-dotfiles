@@ -13,6 +13,7 @@
     ./features/hyprland
     ./features/ghostty
     ./features/theme
+    ./features/claude
   ];
 
   home.stateVersion = "26.05";
