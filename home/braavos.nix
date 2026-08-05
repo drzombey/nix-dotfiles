@@ -23,5 +23,11 @@
     EDITOR = "nvim";
   };
 
+  # Rebuild ohne Flake-Pfad: Hostname (braavos) wählt das Flake-Target automatisch
+  home.shellAliases = {
+    nrs = "sudo nixos-rebuild switch --flake /home/tim/nix-dotfiles";
+    nrb = "nix build /home/tim/nix-dotfiles#nixosConfigurations.braavos.config.system.build.toplevel";
+  };
+
   programs.home-manager.enable = true;
 }
