@@ -1,7 +1,7 @@
 { pkgs, lib, ... }: {
 
+  # claude-code selbst liegt in environment.systemPackages (systems/braavos)
   home.packages = with pkgs; [
-    claude-code
     rtk # Token-Proxy, wird vom PreToolUse-Hook in settings.json aufgerufen
     jq # von der statusLine benötigt
   ];
