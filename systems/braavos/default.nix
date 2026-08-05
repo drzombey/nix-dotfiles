@@ -86,10 +86,14 @@
   # Docker
   virtualisation.docker.enable = true;
 
+  # Fish als Login-Shell (Konfiguration via Home-Manager)
+  programs.fish.enable = true;
+
   users.users."tim" = {
     isNormalUser = true;
     description = "Tim Lange";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
+    shell = pkgs.fish;
   };
 
   nixpkgs.config.allowUnfree = true;

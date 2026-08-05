@@ -64,6 +64,14 @@
           specialArgs = extraArgs;
           modules = [
             ./systems/braavos
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = extraArgs;
+              home-manager.backupFileExtension = "hm-bak";
+              home-manager.users.tim = import ./home/braavos.nix;
+            }
           ];
         };
       };

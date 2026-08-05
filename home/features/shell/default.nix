@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
 
   home.packages = with pkgs; [
     fzf
@@ -22,7 +22,10 @@
     '';
 
     # workaround for fixing the path order: https://github.com/LnL7/nix-darwin/issues/122
-    shellInit = ''
+    shellInit = lib.optionalString pkgs.stdenv.isLinux ''
+      # 1password ssh-agent
+      set -gx SSH_AUTH_SOCK $HOME/.1password/agent.sock
+    '' + lib.optionalString pkgs.stdenv.isDarwin ''
       for elt in $PATH
         if not contains -- $elt $oldPath /usr/local/bin /usr/bin /bin /usr/sbin /sbin
           set -ag fish_user_paths $elt
@@ -108,11 +111,12 @@
     "wgup-staging" = "wg-quick up ~/.config/wireguard/staging.conf";
     "wgdown-staging" = "wg-quick down ~/.config/wireguard/staging.conf";
     "cat" = "bat -pp";
-    "tailscale"="/Applications/Tailscale.app/Contents/MacOS/Tailscale";
     "k" = "kubectl";
     "vim" = "nvim";
     "vi" = "nvim";
     "v" = "nvim";
+  } // lib.optionalAttrs pkgs.stdenv.isDarwin {
+    "tailscale" = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
   };
 
   home.file = {

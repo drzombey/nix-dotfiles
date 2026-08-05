@@ -59,7 +59,10 @@
       fetch.prune = true;
 
       gpg.format = "ssh";
-      gpg.ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+      gpg.ssh.program =
+        if pkgs.stdenv.isDarwin
+        then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+        else "${pkgs._1password-gui}/share/1password/op-ssh-sign";
       gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
       
       url."ssh://git@github.com/".insteadOf = "https://github.com";
