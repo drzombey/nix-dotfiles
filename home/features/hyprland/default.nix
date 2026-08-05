@@ -6,6 +6,11 @@
     package = null;
     portalPackage = null;
 
+    # hyprland.conf statt hyprland.lua: der Lua-Generator von Home-Manager
+    # erzeugt derzeit ungültiges Lua (hl.$mod(...), hl.exec-once(...)) und
+    # trifft die echte Lua-API von Hyprland (hl.config{...}) noch nicht.
+    configType = "hyprlang";
+
     settings = {
       monitor = ",preferred,auto,1";
 
