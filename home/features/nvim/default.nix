@@ -21,8 +21,21 @@
     gofumpt
   ];
 
-  # LazyVim-Config: privates Repo drzombey/lazyvim, muss schreibbar bleiben
-  # (LazyVim pflegt lazy-lock.json selbst). Kein Auto-Clone hier, weil die
-  # Home-Manager-Aktivierung als Systemdienst ohne SSH-Agent läuft:
-  #   git clone git@github.com:drzombey/lazyvim.git ~/.config/nvim
+  # LazyVim-Config: privates Repo drzombey/lazyvim, bleibt schreibbar
+  # (LazyVim pflegt lazy-lock.json selbst) -> nur klonen, wenn nicht vorhanden.
+  # Nutzt den 1Password-SSH-Agenten; der ist nur erreichbar, wenn die App läuft
+  # und entsperrt ist. Fehlschlag darf den Switch nicht abbrechen -> "|| true".
+  home.activation.cloneLazyVim = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -e "$HOME/.config/nvim" ]; then
+      if SSH_AUTH_SOCK="$HOME/.1password/agent.sock" \
+         GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -o BatchMode=yes" \
+         ${pkgs.git}/bin/git clone git@github.com:drzombey/lazyvim.git \
+           "$HOME/.config/nvim"; then
+        echo "LazyVim-Config geklont."
+      else
+        echo "LazyVim-Config NICHT geklont (1Password entsperrt? Dann erneut 'nrs')." >&2
+        rm -rf "$HOME/.config/nvim"
+      fi
+    fi
+  '';
 }
