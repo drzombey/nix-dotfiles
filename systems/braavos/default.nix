@@ -58,6 +58,10 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
 
+  # GNOME Keyring (Secret Service, u.a. für 1Password/2FA)
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
+
   # Audio (PipeWire)
   security.rtkit.enable = true;
   services.pipewire = {
