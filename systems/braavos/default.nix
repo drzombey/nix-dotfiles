@@ -134,8 +134,6 @@
     waybar
     wofi
     mako
-    hyprlock
-    hypridle
     hyprpolkitagent
     nautilus
     networkmanagerapplet
