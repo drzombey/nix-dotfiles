@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
+    ./camera
   ];
 
   # Bootloader: Secure Boot via lanzaboote. Kernel + Initrd + Cmdline werden
