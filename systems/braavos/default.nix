@@ -6,9 +6,22 @@
     ./disko.nix
   ];
 
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
+  # Bootloader: Secure Boot via lanzaboote. Kernel + Initrd + Cmdline werden
+  # zu einer UKI verschmolzen und mit dem eigenen db-Key signiert; lanzaboote
+  # ersetzt dabei das systemd-boot-Modul, deshalb muss das hier aus (es
+  # installiert sonst eine zweite, unsignierte Version daneben).
+  boot.loader.systemd-boot.enable = false;
+  # Wird von boot.lanzaboote.configurationLimit als Default geerbt.
+  # Faustregel für die ESP: ~60 MB pro Generation (14 MB Kernel + 45 MB
+  # Initrd), bei 1 GB /boot also nicht viel höher drehen.
   boot.loader.systemd-boot.configurationLimit = 10;
+  boot.lanzaboote = {
+    enable = true;
+    # sbctl-Default seit v0.14. Liegt außerhalb des Nix-Stores, weil der
+    # private db-Key nichts im world-readable Store zu suchen hat — heißt
+    # aber auch: nicht deklarativ, nach einem Neuinstall neu erzeugen.
+    pkiBundle = "/var/lib/sbctl";
+  };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.systemd.enable = true;
@@ -168,6 +181,8 @@
     mise
     claude-code
     compsize # zeigt die echte btrfs-Compression-Ratio pro Pfad
+    sbctl # Secure-Boot-Keys verwalten und Signaturen prüfen
+    e2fsprogs # chattr/lsattr — nötig, um efivarfs-Variablen zum Enrollen zu entsperren
 
     # Apps
     google-chrome

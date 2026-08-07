@@ -167,6 +167,132 @@ Danach einmal ab- und wieder anmelden, damit home-manager auf dem
 zurückgespielten Home aufsetzt, dann `nrs` (= `sudo nixos-rebuild switch --flake
 /home/tim/nix-dotfiles`).
 
+## 5b. Secure Boot einrichten (lanzaboote)
+
+Reihenfolge beachten: **erst Secure Boot, dann TPM.** Das Einschalten von
+Secure Boot verändert PCR 7, und genau daran hängt der TPM-Keyslot — andersrum
+darf man alles zweimal machen.
+
+lanzaboote ist in `flake.nix` und `systems/braavos/default.nix` schon
+konfiguriert. Was nicht deklarativ geht: die Keys selbst. Der private db-Key
+liegt in `/var/lib/sbctl` und hat im world-readable Nix-Store nichts verloren,
+also nach jedem Neuinstall einmal von Hand:
+
+Henne/Ei: `sbctl` steht in `systemPackages`, ist also erst *nach* dem Rebuild
+im PATH — die Keys müssen aber *vorher* existieren, sonst hat lanzaboote nichts
+zum Signieren und der Rebuild bricht bei der Bootloader-Installation ab. Also
+für den ersten Aufruf direkt aus dem Store:
+
+```bash
+sudo $(nix build --no-link --print-out-paths \
+  /home/tim/nix-dotfiles#nixosConfigurations.braavos.pkgs.sbctl)/bin/sbctl create-keys
+
+sudo nixos-rebuild switch --flake /home/tim/nix-dotfiles#braavos
+sudo sbctl verify                                             # ab jetzt im PATH
+```
+
+`sbctl verify` muss für `BOOTX64.EFI`, `systemd-bootx64.efi` und die
+`EFI/Linux/nixos-generation-*.efi` ein ✓ zeigen. Die rohen `*-bzImage.efi`
+unter `EFI/nixos/` sind erwartungsgemäß **nicht** signiert — die werden bei
+lanzaboote nicht direkt gebootet, der Kernel steckt in der UKI.
+
+### Firmware in den Setup Mode (Dell XPS 16)
+
+Beim Booten F2 für das BIOS, dann:
+
+1. **Security → Secure Boot**: „Enable Secure Boot" auf **On**
+2. **Secure Boot Mode** von „Deployed Mode" auf **„Audit Mode"** stellen —
+   das löscht den Platform Key und ist bei Dell der Weg in den Setup Mode
+3. F10, speichern und neu starten
+
+> **Nicht** „Delete all Secure Boot Settings" / „Clear All Keys" nehmen. Das
+> wirft auch die dbx (Forbidden Signature Database, aktuell ~19 kB) weg, und
+> die bekommt man nur über „Restore Factory Keys" + Neuanfang zurück.
+
+Nach dem Reboot prüfen, dass die Firmware wirklich im Setup Mode ist:
+
+```bash
+sudo sbctl status        # Setup Mode: ✓ Enabled
+```
+
+### Keys enrollen
+
+Der Kernel setzt auf schon existierende EFI-Variablen ein Immutable-Flag.
+KEK und db müssen deshalb vorher entsperrt werden, sonst bricht `enroll-keys`
+mit „File is immutable / You need to chattr -i files in efivarfs" ab. Die GUIDs
+stehen in der Fehlermeldung; **die `dbx-*` nicht anfassen**:
+
+```bash
+sudo chattr -i /sys/firmware/efi/efivars/KEK-8be4df61-93ca-11d2-aa0d-00e098032b8c \
+               /sys/firmware/efi/efivars/db-d719b2cb-3d3a-4596-a3bc-dad00e67656f
+
+sudo sbctl enroll-keys --microsoft
+```
+
+`--microsoft` ist hier nicht optional: das Dell-Gerät hat Option ROMs
+(Thunderbolt, dGPU), die mit Microsoft-Keys signiert sind. Ohne die
+MS-Zertifikate startet die Kiste im schlimmsten Fall nicht mehr durch.
+
+Dann rebooten, im BIOS **Secure Boot Mode zurück auf „Deployed Mode"**, und
+verifizieren:
+
+```bash
+bootctl status | grep 'Secure Boot'    # → enabled (user)
+sudo sbctl status                       # Setup Mode: ✗ Disabled, Secure Boot: ✓ Enabled
+```
+
+### Wenn es nicht bootet
+
+Die alten Generations in der ESP sind mitsigniert, das Fallback ist also
+schlicht: BIOS → Secure Boot auf Off, booten, Problem in Ruhe angucken.
+Deshalb auch nichts löschen, bevor der erste signierte Boot geklappt hat.
+Zurückbauen komplett: `boot.lanzaboote.enable = false` +
+`boot.loader.systemd-boot.enable = true`, rebuilden, `sudo sbctl reset`.
+
+Kernel-Lockdown ist im NixOS-Kernel nicht aktiv
+(`CONFIG_SECURITY_LOCKDOWN_LSM is not set`), Hibernation und ungetestete
+Kernelmodule funktionieren also mit Secure Boot weiter wie vorher.
+
+BIOS-Updates über fwupd laufen auch weiter: sobald `boot.lanzaboote.enable`
+gesetzt ist, zieht das NixOS-fwupd-Modul eine `fwupd-efi.service` hoch, die
+`fwupdx64.efi` vor jedem `fwupd.service` mit dem db-Key aus `/var/lib/sbctl`
+signiert. Nichts zu tun, aber gut zu wissen, warum es funktioniert.
+
+## 5c. TPM2-Entsperrung einrichten
+
+`tpm2-device=auto` steht schon in `disko.nix`, aber der TPM-Keyslot lebt im
+LUKS-Header auf der Platte und wird beim Neuinstall mitgelöscht — also nach
+jedem Format einmal von Hand nachziehen. Erst rebuilden, damit die
+crypttab-Option im Initrd landet:
+
+```bash
+sudo nixos-rebuild switch --flake /home/tim/nix-dotfiles#braavos
+
+# --wipe-slot=tpm2 macht das Ganze idempotent (alter Slot raus, neuer rein).
+# Fragt je einmal nach der bestehenden LUKS-Passphrase.
+sudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto /dev/nvme0n1p2   # cryptswap
+sudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto /dev/nvme0n1p3   # cryptroot
+```
+
+Prüfen (`systemd-tpm2` als Token, Passphrase weiterhin in Slot 0):
+
+```bash
+sudo cryptsetup luksDump /dev/nvme0n1p3 | grep -E 'Keyslot|systemd-tpm2'
+```
+
+Ohne `--tpm2-pcrs` bindet systemd-cryptenroll an **PCR 7** — den
+Secure-Boot-Zustand inklusive des Zertifikats, mit dem das gebootete Image
+verifiziert wurde. Mit aktivem Secure Boot und eigenen Keys heißt das: nur eine
+mit dem eigenen db-Key signierte UKI bekommt den Schlüssel. Ein Live-USB kommt
+gar nicht erst so weit.
+
+Neu enrollen also immer dann, wenn sich der Secure-Boot-Zustand ändert:
+Ein/Aus-Schalten, `sbctl enroll-keys` erneut laufen lassen, Keys tauschen. PCR 7
+ist unabhängig von Kernel- und Generation-Updates, normale Rebuilds ändern
+daran nichts. Wenn der TPM den Key mal nicht rausrückt, fragt das Initrd
+einfach nach der Passphrase — nichts geht verloren. Entfernen:
+`sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1p3`.
+
 ## 6. Verifizieren
 
 ```bash
@@ -176,7 +302,13 @@ sudo compsize /home /nix          # Compression greift?
 swapon --show                     # 68G aktiv
 systemctl list-timers | grep -E 'snapper|btrfs'
 sudo snapper -c home list         # nach der ersten Stunde nicht mehr leer
+
+bootctl status | grep 'Secure Boot'   # enabled (user)
+sudo sbctl verify                     # UKIs signiert
+df -h /boot                           # ESP nicht vollgelaufen (~60 MB/Generation)
 ```
+
+Und der eigentliche Test: rebooten und **keine** Passphrase eingeben müssen.
 
 Hibernation testen (optional, erst wenn der Rest läuft):
 

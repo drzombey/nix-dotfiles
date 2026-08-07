@@ -20,6 +20,12 @@
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Secure Boot (nur braavos). Auf einen Release-Tag gepinnt statt main —
+    # der Bootloader ist nichts, was man versehentlich mit `nix flake update`
+    # unter sich wegziehen will.
+    lanzaboote.url = "github:nix-community/lanzaboote/v1.1.0";
+    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -31,6 +37,7 @@
     , devenv
     , sops-nix
     , disko
+    , lanzaboote
     , ...
     }:
     let
@@ -69,6 +76,7 @@
           modules = [
             ./systems/braavos
             disko.nixosModules.disko
+            lanzaboote.nixosModules.lanzaboote
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

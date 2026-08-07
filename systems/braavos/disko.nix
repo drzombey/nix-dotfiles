@@ -5,6 +5,11 @@
 # cached die erste Eingabe im Kernel-Keyring und probiert sie beim zweiten
 # Container automatisch, es gibt also nur einen Prompt beim Booten.
 #
+# Entsperrt wird normalerweise per TPM2 (`tpm2-device=auto`, siehe unten), die
+# Passphrase bleibt als Fallback in Slot 0. Die TPM-Keyslots liegen *nicht* im
+# Nix-Store und werden auch nicht von disko angelegt — nach einem Neuinstall
+# einmalig nachziehen (docs/braavos-btrfs.md, Abschnitt TPM2).
+#
 # Achtung: `disko --mode destroy,format,mount` LÖSCHT die Platte.
 # Ablauf für den Neuinstall: docs/braavos-btrfs.md
 {
@@ -36,6 +41,7 @@
             type = "luks";
             name = "cryptswap";
             settings.allowDiscards = true;
+            settings.crypttabExtraOpts = [ "tpm2-device=auto" ];
             content = {
               type = "swap";
               resumeDevice = true;
@@ -51,6 +57,7 @@
             # TRIM durch dm-crypt durchlassen (SSD-Lebensdauer/Performance).
             # Tradeoff: verrät belegte vs. freie Blöcke an einen Angreifer.
             settings.allowDiscards = true;
+            settings.crypttabExtraOpts = [ "tpm2-device=auto" ];
             content = {
               type = "btrfs";
               extraArgs = [ "-f" "--label" "braavos" ];
