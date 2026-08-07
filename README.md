@@ -1,4 +1,19 @@
-# Installation
+# nix-dotfiles
+
+| System | Platform | Config |
+|---|---|---|
+| `braavos` | NixOS (Framework) | `systems/braavos`, `home/braavos.nix` |
+| `valyria` | macOS | `systems/valyria`, `home/default.nix` |
+| `astapor` | NixOS (Server, colmena) | `systems/astapor` |
+
+## Runbooks
+
+- **[braavos: ext4 → btrfs neu installieren](docs/braavos-btrfs.md)** — Backup,
+  disko-Partitionierung, `nixos-install`, Restore, btrfs/snapper im Alltag.
+
+---
+
+# Installation (macOS / valyria)
 
 You need to install Nix, but we are not using their official installer. Instead, we are using the Determinate Systems Nix Installer. You can download it [here](https://install.determinate.systems/determinate-pkg/stable/Universal)!
 

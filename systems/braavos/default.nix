@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./disko.nix
+  ];
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
@@ -10,7 +13,41 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.systemd.enable = true;
 
-  boot.initrd.luks.devices."luks-c4a0a35b-8745-4d8c-a95e-cbc0af4e8310".device = "/dev/disk/by-uuid/c4a0a35b-8745-4d8c-a95e-cbc0af4e8310";
+  # Btrfs: wöchentlicher Scrub verifiziert alle Checksummen und findet
+  # schleichende Bitfehler. Scrub läuft pro Dateisystem, nicht pro Subvolume —
+  # "/" deckt also home/nix/.snapshots mit ab (sonst 4x derselbe Scrub).
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+    fileSystems = [ "/" ];
+  };
+
+  # Automatische Snapshots von /home mit Retention.
+  # Zugriff: `snapper -c home list`, Rollback: `snapper -c home undochange <n>..0`
+  # Read-only Snapshots liegen durchsuchbar unter /home/.snapshots/<n>/snapshot
+  services.snapper = {
+    snapshotInterval = "hourly";
+    # Verpasste Timer nach Suspend/Shutdown nachholen (Laptop)
+    persistentTimer = true;
+    configs.home = {
+      SUBVOLUME = "/home";
+      ALLOW_USERS = [ "tim" ];
+      TIMELINE_CREATE = true;
+      TIMELINE_CLEANUP = true;
+      TIMELINE_LIMIT_HOURLY = 6;
+      TIMELINE_LIMIT_DAILY = 7;
+      TIMELINE_LIMIT_WEEKLY = 4;
+      TIMELINE_LIMIT_MONTHLY = 2;
+      TIMELINE_LIMIT_YEARLY = 0;
+    };
+    # Snapshots von / sind bei NixOS meist unnötig (Boot-Generations können
+    # das schon). Bei Bedarf: Subvolume /.snapshots ist in disko.nix angelegt.
+    # configs.root = {
+    #   SUBVOLUME = "/";
+    #   TIMELINE_CREATE = false;   # nur manuelle/pre-post Snapshots
+    #   TIMELINE_CLEANUP = true;
+    # };
+  };
 
   networking.hostName = "braavos";
   networking.networkmanager.enable = true;
@@ -129,6 +166,7 @@
     cachix
     mise
     claude-code
+    compsize # zeigt die echte btrfs-Compression-Ratio pro Pfad
 
     # Apps
     google-chrome

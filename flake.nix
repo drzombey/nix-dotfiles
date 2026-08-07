@@ -17,6 +17,9 @@
     devenv.url = "github:cachix/devenv/v1.8.1";
     mac-app-util.url = "github:hraban/mac-app-util";
     sops-nix.url = "github:Mic92/sops-nix";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -27,6 +30,7 @@
     , home-manager
     , devenv
     , sops-nix
+    , disko
     , ...
     }:
     let
@@ -64,6 +68,7 @@
           specialArgs = extraArgs;
           modules = [
             ./systems/braavos
+            disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
