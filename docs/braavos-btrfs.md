@@ -45,35 +45,52 @@ hier auch keinen `~/.config/sops/age/keys.txt`. Also nichts zu retten.
 speichern kann — im Archiv bleiben sie erhalten:
 
 ```bash
-# Ventoy-Stick einstecken, Mountpoint prüfen (z.B. /run/media/tim/Ventoy)
-VENTOY=/run/media/tim/Ventoy
+sudo mkdir -p /mnt/ventoy
+sudo mount /dev/disk/by-label/Ventoy /mnt/ventoy   # per Label, /dev/sdX verrutscht
+VENTOY=/mnt/ventoy
+STAMP=$(date +%F)
 
-sudo tar -C /home -czf "$VENTOY/home-tim-$(date +%F).tar.gz" tim
-sudo tar -C /etc/NetworkManager -czf "$VENTOY/nm-connections.tar.gz" system-connections
+sudo tar -C /home --exclude='tim/.cache' --exclude='tim/.local/share/Trash' \
+  -czf "$VENTOY/home-tim-$STAMP.tar.gz" tim
+sudo tar -C /etc/NetworkManager \
+  -czf "$VENTOY/nm-connections-$STAMP.tar.gz" system-connections
+
+# Anleitung mit auf den Stick — die Schritte zum Clonen stehen ja hier drin
+sudo cp /home/tim/nix-dotfiles/docs/braavos-btrfs.md "$VENTOY/BTRFS-ANLEITUNG.md"
 ```
 
 Enthalten ist damit auch `~/.ssh`, der GNOME-Keyring
-(`~/.local/share/keyrings/`) und `~/.claude/`.
+(`~/.local/share/keyrings/`) und `~/.claude/`. `~/.cache` ist bewusst draußen
+(regenerierbar).
 
 Separat, falls dir Container-State wichtig ist (Docker-Volumes liegen außerhalb
 von `/home`):
 
 ```bash
-sudo tar -C /var/lib -czf "$VENTOY/docker.tar.gz" docker
+sudo tar -C /var/lib -czf "$VENTOY/docker-$STAMP.tar.gz" docker
 ```
 
 Und: offene Commits im privaten nvim-Config-Repo pushen.
 
-**Backup verifizieren, bevor Schritt 2 läuft:**
+**Backup verifizieren, bevor Schritt 2 läuft** — `-tzf > /dev/null`
+dekomprimiert das ganze Archiv und findet damit auch Abbrüche mitten drin:
 
 ```bash
-tar -tzf "$VENTOY/home-tim-$(date +%F).tar.gz" | head
-sync
+tar -tzf "$VENTOY/home-tim-$STAMP.tar.gz" > /dev/null && echo OK
+sync && sudo umount /mnt/ventoy
 ```
 
 ## 2. Von der Ventoy-ISO booten
 
-NixOS-ISO booten, WLAN/LAN verbinden (`nmtui`), dann:
+Auf dem Stick liegt `nixos-graphical-26.05.…iso`. Die bootet in einen Desktop
+mit dem grafischen Calamares-Installer — **den nicht benutzen**, der kennt weder
+disko noch dein Flake. Stattdessen ein Terminal öffnen.
+
+Verifiziert für genau diese ISO-Revision: `installation-device.nix` setzt dort
+kein `experimental-features`, Flakes sind also **nicht** aktiv. Die
+`extra-experimental-features`-Flags unten sind daher nötig.
+
+WLAN/LAN verbinden (`nmtui`), dann:
 
 ```bash
 sudo -i
@@ -128,16 +145,22 @@ Nach dem ersten Login (Hyprland läuft, weil die Config schon vollständig
 installiert ist) den Stick einstecken:
 
 ```bash
-VENTOY=/run/media/tim/Ventoy
+sudo mkdir -p /mnt/ventoy
+sudo mount /dev/disk/by-label/Ventoy /mnt/ventoy
+VENTOY=/mnt/ventoy
+ls "$VENTOY"/home-tim-*.tar.gz      # exakten Dateinamen ablesen
+STAMP=2026-08-07                     # ← auf das Datum des Backups setzen
 
 # Home zurück. --overwrite, weil nixos-install/home-manager schon Dateien
 # angelegt hat (z.B. .config/fish, .bashrc)
-sudo tar -C /home -xzf "$VENTOY/home-tim-2026-08-07.tar.gz" --overwrite
+sudo tar -C /home -xzf "$VENTOY/home-tim-$STAMP.tar.gz" --overwrite
 sudo chown -R tim:users /home/tim
 
 # WLAN
-sudo tar -C /etc/NetworkManager -xzf "$VENTOY/nm-connections.tar.gz" --overwrite
+sudo tar -C /etc/NetworkManager -xzf "$VENTOY/nm-connections-$STAMP.tar.gz" --overwrite
 sudo systemctl restart NetworkManager
+
+sync && sudo umount /mnt/ventoy
 ```
 
 Danach einmal ab- und wieder anmelden, damit home-manager auf dem
