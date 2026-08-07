@@ -127,6 +127,7 @@
   services.blueman.enable = true;
   services.fwupd.enable = true;
   services.thermald.enable = true;
+  # Liefert auch die Energieprofile für die Bar (net.hadess.PowerProfiles)
   services.power-profiles-daemon.enable = true;
 
   # sudo-Passwort 30 Min gültig (pro Terminal)
@@ -174,7 +175,6 @@
 
     # Hyprland-Umgebung
     ghostty
-    waybar
     wofi
     mako
     hyprpolkitagent
@@ -190,6 +190,10 @@
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
+    # Reine Icon-Schrift für die Quickshell-Bar: die Glyphen liegen in Unicode-
+    # Private-Use-Bereichen, deshalb wird sie dort direkt adressiert.
+    nerd-fonts.symbols-only
+    inter
     noto-fonts
     noto-fonts-color-emoji
   ];

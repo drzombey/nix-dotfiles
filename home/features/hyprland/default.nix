@@ -18,8 +18,10 @@
       "$terminal" = "ghostty";
       "$menu" = "wofi --show drun";
 
+      # quickshell fehlt hier absichtlich: es läuft als systemd-User-Service
+      # (siehe features/quickshell) und wird über graphical-session.target
+      # gestartet und gestoppt.
       exec-once = [
-        "waybar"
         "mako"
         "nm-applet --indicator"
         "systemctl --user start hyprpolkitagent"
@@ -83,6 +85,9 @@
 
         # Sperren
         "$mod, L, exec, hyprlock"
+
+        # Bar neu starten (nach Änderungen an der QML-Konfiguration)
+        "$mod SHIFT, R, exec, systemctl --user restart quickshell"
       ];
 
       # Fenster mit Maus verschieben/skalieren

@@ -11,6 +11,7 @@
     ./features/nvim
     ./features/tmux
     ./features/hyprland
+    ./features/quickshell
     ./features/ghostty
     ./features/theme
     ./features/claude

@@ -10,6 +10,8 @@
 
 - **[braavos: ext4 → btrfs neu installieren](docs/braavos-btrfs.md)** — Backup,
   disko-Partitionierung, `nixos-install`, Restore, btrfs/snapper im Alltag.
+- **[braavos: Quickshell-Bar](docs/braavos-quickshell.md)** — Aufbau und
+  Bedienung der Bar, Struktur der QML-Konfiguration, Design-Workflow.
 
 ---
 
